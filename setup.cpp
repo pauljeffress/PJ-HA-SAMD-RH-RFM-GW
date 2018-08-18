@@ -117,13 +117,27 @@ void setup() {
   #endif
 
   // RadioHead radio initialisation code
-  if (!manager.init())
-    {
-    Serial.println("radio init failed.");
-    while(1);
-    }
-  driver.setFrequency(915.0);
-  driver.setTxPower(13, false);
+   if (!manager.init())
+    Serial.println("init FAILED");
+  else
+    Serial.println("init succeded");
+  // Defaults after init are 434.0MHz, modulation GFSK_Rb250Fd250, +13dbM (for low power module)
+  // No encryption
+  
+  if (!driver.setFrequency(915.0))
+    Serial.println("setFrequency FAILED");
+  else
+    Serial.println("setFrequency succeded");
+    
+  // If you are using a high power RF69 eg RFM69HW, you *must* set a Tx power with the
+  // ishighpowermodule flag set like this:
+  driver.setTxPower(13, true);
+    
+  // The encryption key has to be the same as the one in the client
+  uint8_t key[] = { 0x02, 0x03, 0x07, 0x02, 0x06, 0x06, 0x01, 0x01,
+                    0x02, 0x03, 0x07, 0x02, 0x06, 0x06, 0x01, 0x01};
+  driver.setEncryptionKey(key); Serial.println("Encryption ENABLED");
+  //Serial.println("Encryption DISABLED");
 
   #ifdef DEBUGPJ2
     Serial.println("radio initialisation is done.");
