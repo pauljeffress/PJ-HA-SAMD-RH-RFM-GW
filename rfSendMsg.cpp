@@ -3,7 +3,7 @@
 //
 //  sends messages over the radio network
 
-#include "PJ-HA-RFM_GW.h" // My global defines and extern variables to help multi file comilation.
+#include "PJ-HA-SAMD-RH-RFM-GW.h" // My global defines and extern variables to help multi file comilation.
 
 void rfSendMsg(int rfPackTo) {
   #ifdef DEBUGPJ2

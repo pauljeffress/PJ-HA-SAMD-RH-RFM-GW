@@ -7,7 +7,7 @@
 //           & "buff_mes"...Fills it with Integer, Real, String etc, depending on type of DevID.
 // then calls "mqttClient.publish(buff_topic,buff_mess)" to send it north over MQTT/IP to broker.
 
-#include "PJ-HA-RFM_GW.h" // My global defines and extern variables to help multi file comilation.
+#include "PJ-HA-SAMD-RH-RFM-GW.h" // My global defines and extern variables to help multi file comilation.
 
 void processRfPacket(int rfPackLen, int rfPackFrom) {
   bool MesSizeOK = false; 

@@ -130,7 +130,7 @@
 //			   - RSSI value changed to reception strength in the gateway giving a more accurate and uptodate value ; March 2015
 //	
 
-#include "PJ-HA-RFM_GW.h" // My global defines and extern variables to help multi file comilation.
+#include "PJ-HA-SAMD-RH-RFM-GW.h" // My global defines and extern variables to help multi file comilation.
 
 
 //Note: The below function is here as it was the only way I could make the whole sketch compile!
