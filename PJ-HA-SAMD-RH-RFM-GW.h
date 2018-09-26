@@ -2,14 +2,15 @@
 #define PJ-HA-RFM_GW_H
 
 #include <arduino.h>
-
-#define RH_MESH_MAX_MESSAGE_LEN 80  // Max size of packet for RadioHead
-#define HARFPACKSIZE 52 // Proper packet size for one of my home automation RF packets
 #include <RHMesh.h>
 #include <RH_RF69.h>
 #include <SPI.h>
-#include <Ethernet.h>
+#include <Ethernet2.h>        // Ethernet2 library, Adafruits Fork. Required for Feather Ethernet Wing.
 #include <PubSubClient.h>
+
+
+#define RH_MESH_MAX_MESSAGE_LEN 80  // Max size of packet for RadioHead
+#define HARFPACKSIZE 52 // Proper packet size for one of my home automation RF packets
 
 // RadioHead Mesh Addressing
 #define CLIENT_ADDRESS 1
@@ -40,31 +41,39 @@
 //                                          so as per forums etc, go with pin 8)
 //              I used pin 53 for Mega2560 (native SPI SS pin on this board...see mega pinout diag)
 //                  Note: Mega has hw SPI port on 50,51,52,53...so need to make sure all wiring to the RFM69 is correct.
-#define PJ_RFM_SS      MY_RF69_SPI_CS				// Slave Select RFM69 is connected to.  See comments above, as this varies. MY_RF69_SPI_CS is a SenseBender pin name.
-#define PJ_RFM_RESET   MY_RF69_RESET
-#define PJ_RFM_IRQ_PIN MY_RF69_IRQ_PIN
-#define PJ_RFM_IRQ_NUM MY_RF69_IRQ_NUM
-#define PJ_RFM_IS_RFM69HCW false
+#define PJ_RFM_SS      8				// Slave Select RFM69 is connected to.  See comments above, as this varies. MY_RF69_SPI_CS is a SenseBender pin name.
+#define PJ_RFM_RESET   4
+#define PJ_RFM_IRQ_PIN 3
+#define PJ_RFM_IRQ_NUM 3
+// define PJ_RFM_IS_RFM69HCW false (pre RH lib)
 
 #define NETWORKID 111				// closed radio network ID
 
-//Match frequency to the hardware version of the radio (uncomment one):
-//#define FREQUENCY RF69_433MHZ
-//define FREQUENCY RF69_868MHZ
-#define FREQUENCY RF69_915MHZ
+// Ethernet settings
+// for use with Adafruit Ethernet FeatherWing
+#if defined(ESP8266)
+  // default for ESPressif
+  #define WIZ_CS 15
+#elif defined(ESP32)
+  #define WIZ_CS 33
+#elif defined(ARDUINO_STM32_FEATHER)
+  // default for WICED
+  #define WIZ_CS PB4
+#elif defined(TEENSYDUINO)
+  #define WIZ_CS 10
+#elif defined(ARDUINO_FEATHER52)
+  #define WIZ_CS 11
+#else   // default for 328p, 32u4, M4 and M0
+  #define WIZ_CS 10
+#endif
 
-#define ENCRYPTKEY "xxxxxxxxxxxxxxxx" 		// shared 16-char encryption key is equal on Gateway and nodes
-//define IS_RFM69HW 				// uncomment only for RFM69HW! Leave out if you have RFM69W!
-#define ACK_TIME 50 				// max # of ms to wait for an ack
 
 // PIN settings
-#define MQCON LED_GREEN					// GREEN LED - MQTT Connection indicator.  LED_GREEN is a SenseBender pin name.
-#define R_LED LED_RED	    			// RED LED - Radio activity indicator
-#define P_LED LED_BLUE          // BLUE LED - Power/Startup LED
+#define MQCON A3					// GREEN LED - MQTT Connection indicator.  LED_GREEN is a SenseBender pin name.
+#define R_LED A4	    			// RED LED - Radio activity indicator
+#define P_LED A5          // BLUE LED - Power/Startup LED
 
 #define COMMS_LED_ON_PERIOD 1000 // How long we keep it on for, in mSec.
-
-// pj samd stuff     #define PJETHRESET NET_RST   // see notes above re v23 12-09-16.  NET_RST is a SenseBender pin name.
 
 // ==============================================
 // 'struct's that I had to place here not in main ino file, to assist compilation.

@@ -10,7 +10,7 @@ void loop() {
     if (Rstat) {            // turn off radio LED after 100 msec
       if (millis() - onMillis > COMMS_LED_ON_PERIOD) {
         Rstat = false;
-        digitalWrite(R_LED, LOW);
+        digitalWrite(R_LED, HIGH);
         }
       }
     if (lastMinute != (millis()/60000))       // another minute passed ?
@@ -43,28 +43,15 @@ void loop() {
   uint8_t from;
   if (manager.recvfromAck((uint8_t*)&mes, &len, &from)) // a valid RadioHead message was received for this node.
   {
-    //Serial.print("got a RadioHead message for this node from=");
-    //Serial.print(from);
-    //Serial.print(", len=");
-    //Serial.print(len);
-
-  
     processRfPacket(len, from);
-
   }
-  // Old pre RadioHead method....
-  // if (radio.receiveDone()) { // check for received radio packets and construct MQTT message
-  //   processRfPacket();
-  //   } 
 
-  // MQTT/IP - CHECK CONNECTION STILL UP - REESTABLISH IF NOT - RECEIVE/PROCESS MQTT SUBSCRIPTIONS
-  //
   if (!mqttClient.loop()) {     // check connection MQTT server and process MQTT subscription input
     #ifdef DEBUGPJ2
       Serial.println("Loop() - mqtt not connected");
     #endif
     mqttCon = 0;                  // if you get to this line the MQTT/IP connection is down.
-    digitalWrite(MQCON, LOW);     // switch off the MQTT/IP Connection LED, as we have lost connection.
+    digitalWrite(MQCON, HIGH);     // switch off the MQTT/IP Connection LED, as we have lost connection.
   
     int numtries = 5;
     while((mqttCon != 1) && (numtries > 0))        // retry MQTT connection 'numtries' times if nescesary
@@ -76,7 +63,7 @@ void loop() {
 
     if(mqttCon){          // Connected !
       Serial.println("Connected with MQTT server");
-      digitalWrite(MQCON, HIGH);      // switch on MQTT connection indicator LED
+      digitalWrite(MQCON, LOW);      // switch on MQTT connection indicator LED
       mqttClient.subscribe(subTopic);     // subscribe to all southbound messages
       }
     else Serial.println("No con with MQTT server");  // at this stage even if we have not been able to reconnect to

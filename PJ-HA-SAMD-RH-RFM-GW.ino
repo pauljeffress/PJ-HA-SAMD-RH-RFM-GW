@@ -382,8 +382,8 @@ void mqtt_subs(char* topic, byte* payload, unsigned int length)
 //-------------------------------------------------------------------------
 // Ethernet settings
 byte mac[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0x01, 0x01 };	// My MAC address for ethernet match it to NodeID to ease troubleshooting.
-byte mqtt_server[] = { 192, 168, 200, 241};		        // MQTT broker address
-byte ip[] = { 192, 168, 200 , 248 };			            // My IP address
+byte mqtt_server[] = { 192, 168, 1, 10};		        // MQTT broker address
+byte ip[] = { 192, 168, 1 , 9 };			            // My IP address
 
 // Others
 Message mes;

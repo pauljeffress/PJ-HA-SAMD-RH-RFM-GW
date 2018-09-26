@@ -18,7 +18,7 @@ void processRfPacket(int rfPackLen, int rfPackFrom) {
   //#endif
   
   Rstat = true;               // set radio indicator flag 
-  digitalWrite(R_LED, HIGH);  // turn on radio LED
+  digitalWrite(R_LED, LOW);  // turn on radio LED
   onMillis = millis();        // store timestamp, so loop() can turn it off when the time is up.
 
   if (rfPackLen == HARFPACKSIZE) // we got valid sized home automation message from a node.
@@ -36,23 +36,8 @@ void processRfPacket(int rfPackLen, int rfPackFrom) {
       Serial.println(rfPackLen);
       Serial.print("expected mes size:");
       Serial.println(HARFPACKSIZE);
-      
-      // mes = *(Message*)radio.DATA;  // copy radio packet
-
-      // Serial.print("Inbound Message from Node:");Serial.print(radio.SENDERID);Serial.print(" with RSSI:");Serial.println(radio.RSSI);
-      // Serial.println("=========RF msg data===================");
-      // Serial.print("From devID:");Serial.println(mes.devID);
-      // Serial.print("       cmd:");Serial.println(mes.cmd);
-      // Serial.print("    intVal:");Serial.println(mes.intVal);
-      // Serial.print(" fltintVal:");Serial.println(mes.fltintVal);
-      // Serial.print("To  NodeID:");Serial.println(mes.nodeID);
-      // Serial.print("   payLoad:");
-      //       for (int i=0; i<32; i++) Serial.print(mes.payLoad[i]);
-      // Serial.println(":");
-      // Serial.println("=======================================");
     #endif  // DEBUGPJ2
     }
-    
   else    // message size OK...
     {
     #ifdef DEBUGPJ2
@@ -124,9 +109,7 @@ void processRfPacket(int rfPackLen, int rfPackFrom) {
         }
         break;
       } // end switch
-
-        
-      #ifdef DEBUGPJ2
+    #ifdef DEBUGPJ2
       Serial.println();
       Serial.println("IP/MQTT message sending >>>>"); 
       Serial.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++");
@@ -134,12 +117,10 @@ void processRfPacket(int rfPackLen, int rfPackFrom) {
       Serial.print("+ Payload:"); Serial.println(buff_mess);   
       Serial.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++");
       Serial.println();
-      #endif
+    #endif
       
-
     mqttClient.publish(buff_topic,buff_mess);     // publish MQTT message in northbound topic
 
-    // if (radio.ACKRequested()) radio.sendACK();      // reply to any radio ACK requests // Not required with RadioHead
     }
 
   #ifdef DEBUGx
