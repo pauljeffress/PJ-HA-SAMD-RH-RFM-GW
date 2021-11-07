@@ -5,7 +5,8 @@
 #include <RHMesh.h>
 #include <RH_RF69.h>
 #include <SPI.h>
-#include <Ethernet2.h>        // Ethernet2 library, Adafruits Fork. Required for Feather Ethernet Wing.
+#include <Ethernet2.h>        // Ethernet2 library, installed via Arduino IDE and then modified as per my Evenrnote called
+                              // "SAM_GW Node01 Gateway" for details.
 #include <PubSubClient.h>
 
 

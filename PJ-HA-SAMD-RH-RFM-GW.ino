@@ -382,7 +382,7 @@ void mqtt_subs(char* topic, byte* payload, unsigned int length)
 //-------------------------------------------------------------------------
 // Ethernet settings
 byte mac[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0x01, 0x01 };	// My MAC address for ethernet match it to NodeID to ease troubleshooting.
-byte mqtt_server[] = { 192, 168, 1, 10};		        // MQTT broker address
+byte mqtt_server[] = { 192, 168, 1, 44};		        // MQTT broker address
 byte ip[] = { 192, 168, 1 , 9 };			            // My IP address
 
 // Others
@@ -427,7 +427,3 @@ PubSubClient mqttClient(mqtt_server, 1883, mqtt_subs, ethClient );
 void mqtt_subs(char* topic, byte* payload, unsigned int length);
 void rfSendMsg(int target);
 void processRfPacket();
-
-
-
-
