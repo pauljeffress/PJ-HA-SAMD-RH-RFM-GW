@@ -57,7 +57,8 @@ void loop() {
     while((mqttCon != 1) && (numtries > 0))        // retry MQTT connection 'numtries' times if nescesary
       {
       Serial.println("Try mqtt connect...");
-      mqttCon = mqttClient.connect(clientName); // retry connection to broker
+      //                                        Broker username,  Broker password
+      mqttCon = mqttClient.connect(clientName, "mosquittouser", "mosquittouser"); // retry connection to broker
       delay(2000);          // wait 2 secs between retries
       }
 
@@ -70,4 +71,3 @@ void loop() {
                                                       // mqtt broker, move on and let loop() keep running.
   }
 } // ============== end LOOP
-

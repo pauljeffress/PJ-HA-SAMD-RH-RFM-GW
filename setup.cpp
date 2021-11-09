@@ -170,7 +170,8 @@ void setup() {
   while((mqttCon != 1) && (numtries > 0))        // retry MQTT connection 'numtries' times if nescesary
       {
       Serial.println("Try mqtt connect...");
-      mqttCon = mqttClient.connect(clientName); // retry connection to broker
+      //                                        Broker username,  Broker password
+      mqttCon = mqttClient.connect(clientName, "mosquittouser", "mosquittouser"); 
       delay(2000);          // wait 2 secs between retries
       }
 
